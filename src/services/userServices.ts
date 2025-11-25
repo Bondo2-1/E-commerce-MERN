@@ -17,7 +17,7 @@ export const register = async ({
   if (findUser) {
     return { data: "user already found with this email", statusCode: 400 };
   }
-
+  
   //hashing password
   const hashedPassword = await bcrypt.hash(password,10)
   const newUser = new userModel({ firstName, lastName, email, password:hashedPassword });
