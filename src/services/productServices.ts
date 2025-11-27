@@ -36,6 +36,8 @@ export const addProduct = async ({title,image,price,stock}:productparams) => {
     }
     const newProduct = new productModel({title,image,price,stock});
     await newProduct.save()
-    return { data: `Product added to database: ${JSON.stringify({ title, image, price, stock })}`, statusCode: 200 };
+    return { data: {title,image,price,stock}, statusCode: 200 };
+    //return { data: `Product added to database: ${JSON.stringify({ title, image, price, stock })}`, statusCode: 200 };
+
 }
 
