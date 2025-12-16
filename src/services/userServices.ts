@@ -1,6 +1,9 @@
 import { userModel } from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { env } from "../config/env";
+
+const jwtSecret = env.jwtSecret || "&`d5bWp9o5ZXc+p";
 export interface registerparams {
   firstName: string;
   lastName: string;
@@ -56,5 +59,5 @@ export const login = async ({ email, password }: paramslogin) => {
 const generateJWT = (data: any) => {
   //const payload = { id: data._id, email: data.email };
   //return jwt.sign(payload, '&`d5bWp9o5ZXc+p', { expiresIn: "24h" });
-  return jwt.sign(data, "&`d5bWp9o5ZXc+p", { expiresIn: "24h" });
+  return jwt.sign(data, jwtSecret, { expiresIn: "24h" });
 };
