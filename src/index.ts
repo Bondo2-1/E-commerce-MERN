@@ -4,15 +4,21 @@ import userRoute from "./routes/userRoute";
 import { seedInitialProducts } from "./services/productServices";
 import productRoute from "./routes/productRoute";
 import cartRoute from "./routes/cartRoute";
+import { env } from "./config/env";
 
 const app = express();
 const port = 3001;
 app.use(express.json());
 
+const mongoUri = env.mongoUri;
+
+if (!mongoUri) {
+  console.error("MONGO_URI env variable is missing");
+  process.exit(1);
+}
+
 mongoose
-  .connect(
-    "mongodb+srv://silenttwraith_db_user:PKyOg6QMEe2nqkpg@student-list.9l7zkco.mongodb.net/ecommerce"
-  )
+  .connect(mongoUri)
   .then(() => console.log("connected to db"))
   .catch((err) => console.log("falied to connect to db", err));
 

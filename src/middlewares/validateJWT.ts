@@ -1,10 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { IUser, userModel } from "../models/userModel";
+import { env } from "../config/env";
 
 export interface ExtendRequest extends Request {
   user?: any;
 }
+
+const jwtSecret = env.jwtSecret || "&`d5bWp9o5ZXc+p";
 
 const validateJWT = (req: ExtendRequest, res: Response, next: NextFunction) => {
   const authorizationHeader = req.get("authorization");
@@ -21,7 +24,7 @@ const validateJWT = (req: ExtendRequest, res: Response, next: NextFunction) => {
     return;
   }
 
-  jwt.verify(token, "&`d5bWp9o5ZXc+p", async (err, decoded) => {
+  jwt.verify(token, jwtSecret, async (err, decoded) => {
     if (err) {
       res.status(403).send("invalid token");
       return;
